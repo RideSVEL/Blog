@@ -112,6 +112,7 @@
             .masthead-brand {
                 float: left;
             }
+
             .nav-masthead {
                 float: right;
             }
@@ -123,6 +124,7 @@
         .cover {
             padding: 0 1.5rem;
         }
+
         .cover .btn-lg {
             padding: .75rem 1.25rem;
             font-weight: 700;
@@ -143,14 +145,24 @@
 <body class="text-center">
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <div th:insert="blocks/header :: header"></div>
-    <main role="main" class="inner cover">
-        <h1 class="cover-heading">Блог на русском</h1>
-        <div th:each="el : ${articles}" class="alert alert-info mt-2">
-            <h3 th:text="${el.title}"></h3>
-            <p th:text="${el.anons}"></p>
-            <a th:href="'/blog/' + ${el.id}" class="btn btn-success">Подробнее</a>
+        <h1>Добавление статьи</h1>
+        <div class="form-group">
+        <form action="/blog/add" method="post">
+            <label>
+                <input type="text" name="title" placeholder="Название статьи"  class="form-control">
+            </label>
+            <br>
+            <label>
+                <input type="text" name="anons" placeholder="Анонс"  class="form-control">
+            </label>
+            <br>
+            <label>
+                <textarea  name="fullText" placeholder="Статья:"  class="form-control"></textarea>
+            </label>
+            <br>
+            <button type="submit" class="btn btn-success">Отправить на рассмотрение</button>
+        </form>
         </div>
-    </main>
 
     <div th:insert="blocks/footer :: footer"></div>
 </div>

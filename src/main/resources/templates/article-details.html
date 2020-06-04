@@ -145,10 +145,12 @@
     <div th:insert="blocks/header :: header"></div>
     <main role="main" class="inner cover">
         <h1 class="cover-heading">Блог на русском</h1>
-        <div th:each="el : ${articles}" class="alert alert-info mt-2">
+        <div th:each="el : ${article}" class="alert alert-info mt-2">
             <h3 th:text="${el.title}"></h3>
             <p th:text="${el.anons}"></p>
-            <a th:href="'/blog/' + ${el.id}" class="btn btn-success">Подробнее</a>
+            <p th:text="${el.fullText}"></p>
+            <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-success">Редактировать</a>
+            <a th:href="'/blog/' + ${el.id} + '/delete'" class="btn btn-success">Удалить</a>
         </div>
     </main>
 
