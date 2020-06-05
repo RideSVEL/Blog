@@ -145,33 +145,39 @@
 <body class="text-center">
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <div th:insert="blocks/header :: header"></div>
-    <main role="main" class="inner cover">
-        <h1 class="cover-heading">Блог на русском</h1>
-        <div th:each="el : ${article}" class="alert alert-info mt-2">
-            <h3 th:text="${el.title}"></h3>
-            <p th:text="${el.anons}"></p>
-            <p th:text="${el.fullText}"></p>
-            <p><b>Просмотры: </b><span th:text="${el.views}"></span></p>
-            <a th:href="'/blog/' + ${el.id} + '/edit'" class="btn btn-success">Редактировать</a>
-            <form th:action="'/blog/delete'" method="post">
+    <h1>Редактирование статьи</h1>
+    <div class="form-group">
+        <div th:each="el : ${article}">
+            <form th:action="'/blog/' + ${el.id} + '/edit'" method="post">
+                <label>
+                    <input type="text" name="title" class="form-control" th:value="${el.title}">
+                </label>
                 <br>
-                <input type="hidden" name="id" th:value="${el.id}">
-                <input type="submit" class="btn btn-success" value="Удалить">
+                <label>
+                    <input type="text" name="anons" class="form-control" th:value="${el.anons}">
+                </label>
+                <br>
+                <label>
+                    <textarea name="fullText" class="form-control" th:text="${el.fullText}"></textarea>
+                </label>
+                <br>
+                <button type="submit" class="btn btn-success">Обновить</button>
             </form>
         </div>
-    </main>
 
+
+    </div>
     <div th:insert="blocks/footer :: footer"></div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
 </body>
 </html>

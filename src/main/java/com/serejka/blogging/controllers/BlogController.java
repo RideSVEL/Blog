@@ -26,7 +26,7 @@ public class BlogController {
         model.addAttribute("title", "Blog");
         Iterable<Article> articles = articleRepository.findAll();
         model.addAttribute("articles", articles);
-        //model.addAttribute("activeHead", "Blog");
+        model.addAttribute("activeHeader", "Blog");
         return "blog";
     }
 
@@ -50,12 +50,48 @@ public class BlogController {
         if (!articleRepository.existsById(id)) {
             return "redirect:/blog";
         }
-        Optional<Article> article =  articleRepository.findById(id);
+        Optional<Article> article = articleRepository.findById(id);
         List<Article> articleList = new ArrayList<>();
         article.ifPresent(articleList::add);
         model.addAttribute("title", articleList.get(0).getTitle());
         model.addAttribute("article", articleList);
         return "article-details";
+    }
+
+    @GetMapping("/blog/{id}/edit")
+    public String articleEdit(Model model, @PathVariable(value = "id") Long id) {
+        if (!articleRepository.existsById(id)) {
+            return "redirect:/blog";
+        }
+        Optional<Article> article = articleRepository.findById(id);
+        List<Article> articleList = new ArrayList<>();
+        article.ifPresent(articleList::add);
+        model.addAttribute("title", "Edit - " + articleList.get(0).getTitle());
+        model.addAttribute("article", articleList);
+        return "article-edit";
+    }
+
+    @PostMapping("/blog/delete")
+    public String articleDelete(@RequestParam Long id) {
+        if (!articleRepository.existsById(id)) {
+            return "redirect:/blog";
+        }
+        Article article = articleRepository.findById(id).orElseThrow();
+        articleRepository.delete(article);
+        return "redirect:/blog";
+    }
+
+    @PostMapping("/blog/{id}/edit")
+    public String articleUpdate(@RequestParam String title, @RequestParam String anons, @RequestParam String fullText, @PathVariable(value = "id") Long id) {
+        if (!articleRepository.existsById(id)) {
+            return "redirect:/blog";
+        }
+        Article article = articleRepository.findById(id).orElseThrow();
+        article.setTitle(title);
+        article.setAnons(anons);
+        article.setFullText(fullText);
+        articleRepository.save(article);
+        return "redirect:/blog";
     }
 
 }
